@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Timers;
+﻿using System.Timers;
 
 namespace DirectumTest
 {
@@ -16,7 +13,6 @@ namespace DirectumTest
             notifyTimer = new System.Timers.Timer(10000);
             notifyTimer.Elapsed += CheckNotifications;
             notifyTimer.Start();
-
         }
 
         public void CheckNotifications(object sender, ElapsedEventArgs e)
@@ -24,11 +20,11 @@ namespace DirectumTest
             var meetingsToNotify = Meetings.Where(m => !m.IsNotificationSent && m.Start-m.NotifyBeforeStart < DateTime.Now).ToList();
             meetingsToNotify.ForEach(m =>
             {
-                Console.WriteLine($"Встреча {m.Name} начинется в {m.Start}");
+                Console.WriteLine($"Встреча {m.Name} начинается в {m.Start}");
                 m.IsNotificationSent = true;
             });
         }
-        public int AddMeeting(Meeting meeting)
+        public int Add(Meeting meeting)
         {
             if (meeting.Start < DateTime.Now)
             {
@@ -52,7 +48,7 @@ namespace DirectumTest
             Meetings.Add(meeting);
             return meeting.Id;
         }
-        public void UpdateMeeting(int id, string name, string? desctiption, DateTime start, int durationMinutes, int? notifyBeforeStartMinutes)
+        public void Update(int id, string name, string? desctiption, DateTime start, int durationMinutes, int? notifyBeforeStartMinutes)
         {
             var meeting = Meetings.FirstOrDefault(m => m.Id == id);
             if (meeting == null)
@@ -63,7 +59,7 @@ namespace DirectumTest
             meeting.Update(name, desctiption, start, durationMinutes, notifyBeforeStartMinutes);
         }
 
-        public void DeleteMeeting(int id)
+        public void Delete(int id)
         {
             int result = Meetings.RemoveAll(m => m.Id == id);
             if (result == 0)
@@ -72,7 +68,7 @@ namespace DirectumTest
             }
         }
 
-        public List<Meeting> GetMeetingsByDate(DateTime date)
+        public List<Meeting> GetByDate(DateTime date)
         {
             var result = Meetings.Where(m => m.Start.Date == date.Date).ToList();
 
@@ -84,9 +80,9 @@ namespace DirectumTest
             return result;
         }
 
-        public void ExportMeetings(DateTime date, string filePath)
+        public void Export(DateTime date, string filePath)
         {
-            var meetingsOnDate = GetMeetingsByDate(date);
+            var meetingsOnDate = GetByDate(date);
             using (var writer = new System.IO.StreamWriter(filePath))
             {
                 foreach (var meeting in meetingsOnDate)

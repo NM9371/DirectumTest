@@ -38,9 +38,9 @@
 
         public override string ToString()
         {
-            string? desctiption = Description == null ? null : " (" + Description + ")";
+            string? description = Description == null ? null : " (" + Description + ")";
             string? notify = NotifyBeforeStart == null ? "Напоминание отключено" : $"Напоминание за {(int)NotifyBeforeStart.Value.TotalMinutes} минут";
-            return $"{Id}; {Name}{desctiption}; {Start} - {End}; {notify}";
+            return $"{Id}; {Name}{description}; {Start} - {End}; {notify}";
         }
     }
 }

@@ -69,7 +69,7 @@ class Program
        
         try
         {
-            int id = manager.AddMeeting(meeting);
+            int id = manager.Add(meeting);
             Console.WriteLine($"Встреча {id} добавлена");
         }
         catch (Exception ex)
@@ -106,7 +106,7 @@ class Program
 
         try
         {
-            manager.UpdateMeeting(id, meetingName, meetingDescription, meetingStart, meetingDuration, notifyBeforeMeeting);
+            manager.Update(id, meetingName, meetingDescription, meetingStart, meetingDuration, notifyBeforeMeeting);
         }
         catch (Exception ex)
         {
@@ -123,7 +123,7 @@ class Program
         int id = int.Parse(Console.ReadLine());
         try
         {
-            manager.DeleteMeeting(id);
+            manager.Delete(id);
         }
         catch (Exception ex)
         {
@@ -137,7 +137,7 @@ class Program
     {
         Console.Write("Введите дату в формате {yyyy-MM-dd}: ");
         DateTime date = DateTime.Parse(Console.ReadLine());
-        var meetings = manager.GetMeetingsByDate(date);
+        var meetings = manager.GetByDate(date);
         if (meetings.Count == 0)
         {
             Console.WriteLine($"Не найдено встреч за {date}");
@@ -156,7 +156,7 @@ class Program
 
         try
         {
-            manager.ExportMeetings(date, filePath);
+            manager.Export(date, filePath);
         }
         catch (Exception ex)
         {
